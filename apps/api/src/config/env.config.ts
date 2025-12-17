@@ -1,5 +1,11 @@
+import { resolve } from 'path';
+import { config } from 'dotenv';
 import { envSchema } from './env.schema';
 import { env } from 'process';
+
+// Load .env file before validation
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+config({ path: resolve(process.cwd(), '.env') });
 
 const result = envSchema.safeParse(env);
 
