@@ -1,11 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { resolve } from 'path';
-import { config } from 'dotenv';
+import * as dotenv from 'dotenv';
 import { envSchema } from './env.schema';
 import { env } from 'process';
 
 // Load .env file before validation
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-config({ path: resolve(process.cwd(), '.env') });
+const dotenvResult = dotenv.config({ path: resolve(process.cwd(), '.env') });
+
+if (dotenvResult.error) {
+  throw dotenvResult.error;
+}
 
 const result = envSchema.safeParse(env);
 
